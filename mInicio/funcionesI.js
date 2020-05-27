@@ -344,9 +344,12 @@ function salir(){
               var letra_color="#fff";
               var color_borde="#40739e";
               cssTema(h_sidebar,color_base,letra_color,color_borde);
+             //PROBLEMAS PARA DESABILITAR EL TOGGLE
               $("#icoLogin").removeClass("fas fa-unlock");
               $("#icoLogin").addClass("fas fa-lock");
               $("#btnIngresar").attr("disabled","disabled");
+              $('#changeC').bootstrapToggle('off');
+              $('#changeC').bootstrapToggle('disable');
               $("#loginUsuario").focus();
   
               var idUsuario=$("#inicioIdusuario").val();

@@ -132,7 +132,10 @@ $fecha=date("Y-m-d");
 
     <!-- Modal de carga -->
         <?php include'../modales/modalCarga.php'; ?>
-    <!-- Modal de carga -->  
+    <!-- Modal de carga -->
+    <!-- Modal de carga -->
+        <?php include'../modales/modalContra.php'; ?>
+    <!-- Modal de carga -->   
     <!-- Modal de datos -->
         <?php include'../mDatosPersonales/modalDatos.php'; ?>
     <!-- Modal de datos -->
@@ -213,6 +216,7 @@ $fecha=date("Y-m-d");
     </script>
     <script type='text/javascript'>
     $(document).ready(function(){ 
+        $('#changeC').bootstrapToggle('disable');
         $(window).scroll(function(){ 
             if ($(this).scrollTop() > 100) { 
                 $('#scroll').fadeIn(); 

@@ -84,9 +84,7 @@ $fecha=date("Y-m-d");
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <select  id="listaTemas" class="select2" style="width: 100% ; margin-bottom: 10px">
-                            <option value="1">Obscuro Clasico</option>
-                            <option value="4">ITLinares Alternativo</option>
-                            <option value="9">CHyP</option>
+                           
                         </select>
                         <br>
                     </div>
