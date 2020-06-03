@@ -145,6 +145,7 @@ $("#loginUsuario").keyup(function(){
                 $("#inicioIdTema").val(dataArray.result.id_tema);
                 $("#uUser").val(dataArray.result.nombre_usuario);
                 $("#uId").val(dataArray.result.id_usuario);
+                $("#uIdC").val(dataArray.result.id_usuario);
                 //$("#frmLogin").fadeIn();
             }else{
                 //colores default

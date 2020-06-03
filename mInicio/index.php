@@ -135,6 +135,7 @@ $fecha=date("Y-m-d");
     <!-- Modal de carga -->
     <!-- Modal de carga -->
         <?php include'../modales/modalContra.php'; ?>
+        <?php include'../modales/modalContraU.php'; ?>
     <!-- Modal de carga -->   
     <!-- Modal de datos -->
         <?php include'../mDatosPersonales/modalDatos.php'; ?>

@@ -351,7 +351,8 @@ function salir(){
               $('#changeC').bootstrapToggle('off');
               $('#changeC').bootstrapToggle('disable');
               $("#loginUsuario").focus();
-  
+                
+              $("#frmCambiarU")[0].reset();
               var idUsuario=$("#inicioIdusuario").val();
               actividad  ="Salio del sistema";
               log(actividad,idUsuario);
@@ -461,4 +462,88 @@ $(".menu").click(function(){
 $('#scroll').click(function(){ 
     $("html, body").animate({ scrollTop: 0 }, 600); 
     return false; 
+});
+
+//Abrir modal contraseña
+$('#cContra').click(function(){
+    $('#modalContraU').modal('show');
+});
+
+//MOSTRAR LA CONTRASEÑA
+$(function(){
+    $('#showC').click(function(){
+        var cambio = document.getElementById("uPasswordC");
+		if(cambio.type == "password"){
+			cambio.type = "text";
+			$('.iconC').removeClass('fas fa-eye').addClass('fas fa-eye-slash');
+		}else{
+            cambio.type = "password";
+            $('.iconC').removeClass('fa fa-eye-slash').addClass('fas fa-eye');
+		}
+    });
+    
+    $('#show2C').click(function(){
+        var cambio = document.getElementById("uPasswordC2");
+		if(cambio.type == "password"){
+			cambio.type = "text";
+			$('.iconC2').removeClass('fas fa-eye').addClass('fas fa-eye-slash');
+		}else{
+            cambio.type = "password";
+            $('.iconC2').removeClass('fa fa-eye-slash').addClass('fas fa-eye');
+		}
+    });
+});
+
+function pass(){
+    var cantidad,cantidad2;
+    cantidad = document.getElementById("uPasswordC").value;
+    //$("#contra").val(cantidad.length);
+    cantidad2 = document.getElementById("uPasswordC2").value;
+
+  if (cantidad == cantidad2) {
+        
+        $("#upCont").removeAttr('disabled');
+        
+    }
+    else{
+        $("#upCont").attr('disabled','disabled');
+    }
+}
+
+$("#uPasswordC2").keyup(function(){
+    pass();
+});
+
+$("#uPasswordC").keyup(function(){
+    pass();
+});
+
+$('#uCloseC').click(function(){
+    $("#uPasswordC2").val("");
+    $("#uPasswordC").val("");
+});
+
+$("#frmCambiarU").submit(function(e){
+
+    var usuario    = $("#uIdC").val();
+    var contrasena    = $("#uPasswordC2").val();
+
+            $.ajax({
+                url:"../mInicio/actualizarC.php",
+                type:"POST",
+                dateType:"html",
+                data:{usuario,contrasena},
+                success:function(respuesta){
+                    $('#modalContraU').modal('hide');
+                    $("#uPasswordC2").val("");
+                    $("#uPasswordC").val("");
+                    alertify.success("Contraseña actualizada",3);
+                },
+                error:function(xhr,status){
+                    alertify.success("Error en AJAX",3); 
+                },
+            });
+
+    e.preventDefault();
+    return false;
 });
