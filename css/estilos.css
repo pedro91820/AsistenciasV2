@@ -10,6 +10,9 @@
     --h-sidebar: #2f3640; */
 }
 
+audio{
+    display: none
+}
 .myJT{
     background:var(--color-base);
     color:var(--letra-color);

@@ -136,6 +136,7 @@ $fecha=date("Y-m-d");
     <!-- Modal de carga -->
         <?php include'../modales/modalContra.php'; ?>
         <?php include'../modales/modalContraU.php'; ?>
+        <?php include'../modales/modalHorario.php'; ?>
     <!-- Modal de carga -->   
     <!-- Modal de datos -->
         <?php include'../mDatosPersonales/modalDatos.php'; ?>
@@ -180,6 +181,7 @@ $fecha=date("Y-m-d");
     <script src="../plugins/PrintArea-master/js/jquery.printarea.js" type="text/javascript"></script>
     <!-- responsivevoice se requiere conexion a internet -->
     <script src="../plugins/voice/responsivevoice.js?key=wJDGnQJT" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js" type="text/javascript"></script>
     <!-- fileinput -->
     <script src="../plugins/bootstrap-fileinput-master/js/plugins/piexif.js" type="text/javascript"></script>
     <script src="../plugins/bootstrap-fileinput-master/js/plugins/sortable.js" type="text/javascript"></script>
@@ -216,7 +218,12 @@ $fecha=date("Y-m-d");
 
     </script>
     <script type='text/javascript'>
-    $(document).ready(function(){ 
+    $(document).ready(function(){
+        $('#modalHorario').on('hidden.bs.modal', function (e) {
+            $(".diaH").attr("readonly","readonly");
+            $(".hSave").attr("disabled","disabled");
+            $("#cH").val('');
+        });
         $('#changeC').bootstrapToggle('disable');
         $(window).scroll(function(){ 
             if ($(this).scrollTop() > 100) { 

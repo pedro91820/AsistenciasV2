@@ -257,7 +257,7 @@ $('#uClose').click(function(){
                             $('#sidebar').toggleClass('active');
                             permisos(dataArray.result.permiso_datos_persona,dataArray.result.permiso_ecivil,dataArray.result.permiso_usuario,dataArray.result.permiso_temas);
                             preloader(1,'Asitencia del personal');
-                            actividad  ="Ingreso al sistema";
+                            actividad  ="Se cambio la contraseña";
                             log(actividad,dataArray.result.id_usuario);
                             verAsistencias();
         

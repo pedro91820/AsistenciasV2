@@ -21,8 +21,8 @@ $cadena = "SELECT
                 id_ecivil
             FROM
                 datos ORDER BY id_datos DESC";
+
 $consultar = mysqli_query($conexionLi, $cadena);
-//$row = mysqli_fetch_array($consultar);
 
 ?>
 <div class="table-responsive">
@@ -34,6 +34,7 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 <th scope="col">Editar</th>
                 <th scope="col">Imprimir</th>
                 <th scope="col">Datos</th>
+                <th scope="col">Horarios</th>
                 <th scope="col">Foto</th>
                 <th scope="col">Audio</th>
                 <th scope="col">Clave</th>
@@ -52,6 +53,28 @@ $consultar = mysqli_query($conexionLi, $cadena);
         while( $row = mysqli_fetch_array($consultar) ) {
 
             $id          = $row[0];
+            
+            $cadena_datos= "SELECT id_horario,turno,l_entrada,l_salida,m_entrada,m_salida,mi_entrada,mi_salida,j_entrada,j_salida,v_entrada,v_salida,s_entrada,s_salida,d_entrada,d_salida,id_datos_persona
+            FROM horarios WHERE id_datos_persona = '$id'";
+            $consulta_datos = mysqli_query($conexionLi, $cadena_datos);
+            $rowws =mysqli_fetch_array($consulta_datos);
+            $horario = $rowws[0];
+            $turno = $rowws[1];
+            $l_entrada = $rowws[2];
+            $l_salida = $rowws[3];
+            $m_entrada = $rowws[4];
+            $m_salida = $rowws[5];
+            $mi_entrada = $rowws[6];
+            $mi_salida = $rowws[7];
+            $j_entrada = $rowws[8];
+            $j_salida = $rowws[9];
+            $v_entrada = $rowws[10];
+            $v_salida = $rowws[11];
+            $s_entrada = $rowws[12];
+            $s_salida = $rowws[13];
+            $d_entrada = $rowws[14];
+            $d_salida = $rowws[15];
+            $id_datos_p = $rowws[16];
 
             if ($row[1] == 1) {
                 $chkChecado    = "checked";
@@ -91,6 +114,14 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 $tFoto="No";
             }
 
+            if ($id_datos_p == $id){
+                $icoHorario="<i class='fas fa-user-clock'></i>";
+                $tHorario="Si";
+            }else{
+                $icoHorario="<i class='fas fa-user-times'></i>";
+                $tHorario="No";
+            }
+
             ?>
             <tr class="centrar">
                 <th scope="row" class="textoBase">
@@ -110,6 +141,13 @@ $consultar = mysqli_query($conexionLi, $cadena);
                         <i class="far fa-window-maximize fa-lg"></i>
                     </button>
                 </td>
+                <!--MODAL HORARIOS-->
+                <td>
+                <button <?php echo $dtnDesabilita?> type="button" class="ventana btn btn-outline-danger btn-sm activo"  id="btnHorario<?php echo $varGral?><?php echo $n?>" onclick="abrirModalHorario('<?php echo $id?>','<?php echo $tHorario?>','<?php echo $nCompleto?>','<?php echo $l_entrada?>','<?php echo $l_salida?>','<?php echo $m_entrada?>','<?php echo $m_salida?>','<?php echo $mi_entrada?>','<?php echo $mi_salida?>','<?php echo $j_entrada?>','<?php echo $j_salida?>','<?php echo $v_entrada?>','<?php echo $v_salida?>','<?php echo $s_entrada?>','<?php echo $s_salida?>','<?php echo $d_entrada?>','<?php echo $d_salida?>','<?php echo $turno?>')">
+                        <?php echo $icoHorario?>
+                    </button>
+                </td>
+                <!--MODAL HORARIOS-->
                 <td>
                     <button <?php echo $dtnDesabilita?> type="button" class="foto btn btn-outline-secondary btn-sm activo"  id="btnFoto<?php echo $varGral?><?php echo $n?>" onclick="abrirModalFoto('<?php echo $id?>','<?php echo $clave?>','<?php echo $nCompleto?>','<?php echo $tFoto?>')">
                         <?php echo $icoFoto?>
@@ -161,6 +199,7 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 <th scope="col">Editar</th>
                 <th scope="col">Imprimir</th>
                 <th scope="col">Datos</th>
+                <th scope="col">Horarios</th>
                 <th scope="col">Foto</th>
                 <th scope="col">Audio</th>
                 <th scope="col">Clave</th>

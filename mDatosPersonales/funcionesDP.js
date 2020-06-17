@@ -218,6 +218,7 @@ function cambiar_estatus_DP(id,consecutivo){
                 $("#btnImprimir-DP"+consecutivo).removeAttr('disabled');
                 $("#btnModal-DP"+consecutivo).removeAttr('disabled');
                 $("#btnFoto-DP"+consecutivo).removeAttr('disabled');
+                $("#btnHorario-DP"+consecutivo).removeAttr('disabled');
                 $("#btnSonido-DP"+consecutivo).removeAttr('disabled');
                 $("#icoSound-DP"+consecutivo).removeClass("fa fa-volume-mute fa-lg");
                 $("#icoSound-DP"+consecutivo).addClass("fa fa-volume-up fa-lg");
@@ -230,6 +231,7 @@ function cambiar_estatus_DP(id,consecutivo){
                 $("#btnImprimir-DP"+consecutivo).attr('disabled','disabled');
                 $("#btnModal-DP"+consecutivo).attr('disabled','disabled');
                 $("#btnFoto-DP"+consecutivo).attr('disabled','disabled');
+                $("#btnHorario-DP"+consecutivo).attr('disabled','disabled');
                 $("#btnSonido-DP"+consecutivo).attr('disabled','disabled');
                 $("#icoSound-DP"+consecutivo).removeClass("fa fa-volume-up fa-lg");
                 $("#icoSound-DP"+consecutivo).addClass("fa fa-volume-mute fa-lg");
@@ -390,6 +392,319 @@ function nuevo_registro_DP(){
     $("#clave").focus();
     
 }
+
+function abrirModalHorario(id,valorhorario,nombre_user,hLunE,hLunS,hMarE,hMarS,hMierE,hMierS,hJuevE,hJuevS,hVierE,hVierS,hSabE,hSabS,hDomE,hDomS,hTurno) {
+
+    $("#hUser").val(nombre_user);
+    $("#hId").val(id);
+    //$("#txtTitularFoto").text(nombre);
+    $("#tieneD").val(valorhorario);
+    if (valorhorario=="No") {
+        //$('#modalHorario')[0].reset();
+        $("#frmHorario").attr("data-action","agregar");
+        $("#hTurno").val('').trigger('change');
+        $(".diaH").attr("readonly","readonly");
+        $(".diaS").val("");
+        $(".diaE").val("");
+        $("#hCnHoras").val("");
+    }else{
+        $("#tieneD").val(valorhorario);
+        $("#hLunE").val(hLunE);
+        $("#hLunS").val(hLunS);
+        $("#hMarE").val(hMarE);
+        $("#hMarS").val(hMarS);
+        $("#hMierE").val(hMierE);
+        $("#hMierS").val(hMierS);
+        $("#hJuevE").val(hJuevE);
+        $("#hJuevS").val(hJuevS);
+        $("#hVierE").val(hVierE);
+        $("#hVierS").val(hVierS);
+        $("#hSabE").val(hSabE);
+        $("#hSabS").val(hSabS);
+        $("#hDomE").val(hDomE);
+        $("#hDomS").val(hDomS);
+        $("#hTurno").val(hTurno).trigger('change');
+        $("#frmHorario").attr("data-action","editar");
+    }
+    
+    $("#modalHorario").modal("show");
+
+}
+
+$('#hTurno').on('change',function(){
+    var option = $(this).val();
+    if(option == 'especial')
+    {
+        //$(".diaH").attr("disabled","disabled");
+        var qDatos = $("#tieneD").val();
+        if(qDatos == "No"){
+            $(".diaS").val("");
+            $(".diaE").val("");
+            $("#hCnHoras").val("");
+            $("#cH").val('');
+        }
+        else{
+            $("#hCnHoras").val("30 horas");
+            $("#cH").val();
+        }
+        $(".diaH").removeAttr("readonly");
+        $(".hSave").attr("disabled","disabled");
+        $(".diaS").removeAttr("required");
+        $(".diaE").removeAttr("required");
+    }
+    else if(option == 'matutino'){
+        $(".diaH").attr("readonly","readonly");
+        $(".hSave").attr("disabled","disabled");
+        $(".hEsp").removeAttr("required");
+        $(".diaE").val("06:00");
+        $(".diaS").val("12:00");
+        $(".hEsp").val("");
+        $("#hCnHoras").val("30 horas");
+        $("#cH").val("30");
+        $(".hSave").removeAttr("disabled");
+    }
+    else if(option == 'vespertino'){
+        $(".diaH").attr("readonly","readonly");
+        $(".hSave").attr("disabled","disabled");
+        $(".hEsp").removeAttr("required");
+        $(".diaE").val("12:00");
+        $(".diaS").val("18:00");
+        $(".hEsp").val("");
+        $("#hCnHoras").val("30 horas");
+        $("#cH").val("30");
+        $(".hSave").removeAttr("disabled");
+    }
+    else if(option == 'nocturno'){
+        $(".diaH").attr("readonly","readonly");
+        $(".hSave").attr("disabled","disabled");
+        $(".hEsp").removeAttr("required");
+        $(".diaE").val("18:00");
+        $(".diaS").val("00:00");
+        $(".hEsp").val("");
+        $("#hCnHoras").val("30 horas");
+        $("#cH").val("30");
+        $(".hSave").removeAttr("disabled");
+    }
+});
+
+//Validaciones
+$('#hLunS').on('change',function(){
+    var tiempo11 = $("#hLunE").val();
+    var tiempo12 = $("#hLunS").val();
+    if(tiempo12 == "" || tiempo11 == "")
+    {
+
+    }
+    else{
+        if (tiempo12 < tiempo11 ) {
+            alertify.error("El horario de salida es mayor que el de entrada", 2);
+        }
+        else{
+            calHoras(tiempo11,tiempo12);
+        }
+    }
+});
+
+$('#hMarS').on('change',function(){
+    var tiempo11 = $("#hMarE").val();
+    var tiempo12 = $("#hMarS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+$('#hMierS').on('change',function(){
+    var tiempo11 = $("#hMierE").val();
+    var tiempo12 = $("#hMierS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+$('#hJuevS').on('change',function(){
+    var tiempo11 = $("#hJuevE").val();
+    var tiempo12 = $("#hJuevS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+$('#hVierS').on('change',function(){
+    var tiempo11 = $("#hVierE").val();
+    var tiempo12 = $("#hVierS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+$('#hSabS').on('change',function(){
+    var tiempo11 = $("#hSabE").val();
+    var tiempo12 = $("#hSabS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+$('#hDomS').on('change',function(){
+    var tiempo11 = $("#hDomE").val();
+    var tiempo12 = $("#hDomS").val();
+    if(tiempo12 == "" || tiempo11 == ""){
+
+    }else{
+    if (tiempo12 < tiempo11 ) {
+        alertify.error("El horario de salida es mayor que el de entrada", 2);
+    }
+    else{
+        calHoras(tiempo11,tiempo12);
+    }
+}
+});
+
+function calHoras(entrada,salida) {
+        var start = moment.duration(entrada, "HH:mm"),
+        end = moment.duration(salida, "HH:mm"),
+        diff = end.subtract(start);
+        //horas
+        var h = diff.hours();
+        //minutos
+        var m =diff.minutes();
+        //duracion
+        //var d = moment.duration(diff);
+        //formato de horas
+        //var s2 = moment.utc(+d).format('HH:mm');
+
+        var contador = $("#hCnHoras").val();
+        var conH = $("#cH").val();
+
+        if(conH == "")
+        {      
+            $("#hCnHoras").val(h + " horas");
+            $("#cH").val(h);
+        }
+        else{
+            //formato de horas
+           // var w = moment(conH,'HH:mm').add(h, 'hours').add(m,'minutes').format('HH:mm');
+            //var w2 = moment(conH,'HH:mm').add(h, 'hours').add(m,'minutes').format('HH');
+            var w = parseInt(h) + parseInt(conH);
+            //alert(conH);
+            if(parseInt(w) >= 30){
+                $(".hSave").removeAttr("disabled");
+            }
+            //var w = moment(conH).add(h, 'hours').add(m,'minutes').format('HH:mm');
+            $("#cH").val(w);
+            //alert(w);
+            $('#hCnHoras').val(w + " horas");
+        }
+
+       //alert("Las horas son " + entrada + " y los minutos " + salida);
+    }
+
+//Insert Update horarios
+$("#frmHorario").submit(function(e){
+    //extraer el valor de altributo data action
+     var accion = $(this).attr("data-action");
+     var nameUser = $("#hUser").val();
+     var idUser = $("#hId").val();
+
+    var hLunE    = $("#hLunE").val();
+    var hLunS    = $("#hLunS").val();
+    var hMarE = $("#hMarE").val();
+    var hMarS = $("#hMarS").val();
+    var hMierE      = $("#hMierE").val();
+    var hMierS    = $("#hMierS").val();
+    var hJuevE      = $("#hJuevE").val();
+    var hJuevS = $("#hJuevS").val();
+    var hVierE      = $("#hVierE").val();
+    var hVierS    = $("#hVierS").val();
+    var hSabE      = $("#hSabE").val();
+    var hSabS    = $("#hSabS").val();
+    var hDomE      = $("#hDomE").val();
+    var hDomS    = $("#hDomS").val();
+    var hTurno    = $("#hTurno").val();
+
+     //esta variable me sirve a donde voy a mandar los datos de ajax
+     var url = "";
+     var horas = $("#cH").val();
+     var actividad = "";
+     if(accion == "agregar")
+     {
+         //que el formulario es para agregar un registro
+         url ="../mDatosPersonales/insertHorario.php";
+         actividad = "Se ha creado un horario para la persona "+nameUser;
+     }
+     else if(accion == "editar")
+     {
+         url="../mDatosPersonales/updateHorario.php";
+         actividad = "Se actualizado el horario para la persona "+nameUser;
+     }
+     //preventDefault = Detiene o cachar la accion por defecto del elemento
+     //Enviamos los archivos mediante ajax
+
+     if(parseInt(horas) >= 30){
+     $.ajax({
+        url:url, //url donde mandare recibir la informacion
+        type:"POST", //Tipo de nevio de AJAX
+        dataType:"html",//Tipo de dato que voy a recibir
+        data: {hLunE,hLunS,hMarE,hMarS,hMierE,hMierS,hJuevE,hJuevS,hVierE,hVierS,hSabE,hSabS,hDomE,hDomS,hTurno,idUser}, //los valores que voy a enviar al archivo URL *serialize sirve para codificar los valores de un formulario en un string para poder enviarlos*
+         success:function(respuesta)
+         {
+             //este codigo se ejecutara mientras la funcion de AJAX sea exitosa
+             $('#modalHorario').modal('hide');
+             alertify.success("<i class='fa fa-save fa-lg'></i>", 2);
+            llenar_lista_DP();
+            log(actividad,idUser);
+            $("#frmHorario").attr("data-action","agregar");
+         },
+         error:function(respuesta_error)
+         {
+             //este codigo se ejecuta cuando la funcion tenga un error
+             alert("Ha ocurrido un error");
+         }
+     });
+    }
+    else{
+        alertify.success("Deben mas de 30 horas laborales", 2);
+    }
+     e.preventDefault();
+     return false;
+     
+ });
+//Aqui termina
 
 function abrirModalFoto(id,clave,nombre,valorfoto) {
 

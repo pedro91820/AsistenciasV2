@@ -89,7 +89,6 @@ function aplicarTema(id,validador){
         success:function(respuesta){
 
             var dataArray = JSON.parse(respuesta);
-
             var h_sidebar=dataArray.result.color_base_fuerte;
             var color_base=dataArray.result.color_base;
             var letra_color=dataArray.result.color_letra;
@@ -104,6 +103,7 @@ function aplicarTema(id,validador){
                 //alertify.success(actividad,2);
 
                 if(validador=='enlace'){
+                    $(".audio")[0].play();
                     preloader(1,"Cambiando al tema "+tema);
                     actividad  ="Ha cambiado al tema "+tema;
                     var idUser=$("#inicioIdusuario").val();
@@ -537,6 +537,8 @@ $("#frmCambiarU").submit(function(e){
                     $('#modalContraU').modal('hide');
                     $("#uPasswordC2").val("");
                     $("#uPasswordC").val("");
+                    actividad  ="Cambio la contraseña";
+                    log(actividad,usuario);
                     alertify.success("Contraseña actualizada",3);
                 },
                 error:function(xhr,status){
