@@ -35,6 +35,9 @@ $fecha=date("Y-m-d");
      <link href="../plugins/bootstrap-fileinput-master/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
      <!-- sweet alert -->
      <link href="../plugins/bootstrap-sweetalert-master/dist/sweetalert.css" media="all" rel="stylesheet" type="text/css"/>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.2.0/css/bootstrap-colorpicker.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/webui-popover/2.1.15/jquery.webui-popover.min.css">
 </head>
 
 <body class="animated  fadeIn">
@@ -124,6 +127,22 @@ $fecha=date("Y-m-d");
                 </section>
                 
                 <section id="Listado-EC" class="animated  fadeIn contenedor" style="display:none;"></section>
+            </div> 
+
+            <div class="container" id="temas">
+                <section id="guardar-TS" style="display:none;">
+                    <?php
+                        include'../mTemas/formGuardar.php';
+                    ?>
+                </section>
+
+                <section id="editar-TS" style="display:none;">
+                    <?php
+                        include'../mTemas/formEditar.php';
+                    ?>
+                </section>
+                
+                <section id="Listado-TS" class="animated  fadeIn contenedor" style="display:none;"></section>
             </div>       
 
         </div>
@@ -137,6 +156,7 @@ $fecha=date("Y-m-d");
         <?php include'../modales/modalContra.php'; ?>
         <?php include'../modales/modalContraU.php'; ?>
         <?php include'../modales/modalHorario.php'; ?>
+        <?php include'../modales/impTemaModal.php'; ?>
     <!-- Modal de carga -->   
     <!-- Modal de datos -->
         <?php include'../mDatosPersonales/modalDatos.php'; ?>
@@ -149,7 +169,8 @@ $fecha=date("Y-m-d");
     <!-- Modal de PDF -->
 
     <!-- jQuery -->
-    <script src="../plugins/jQuery/jquery-3.3.1.js"></script>   
+    <script src="../plugins/jQuery/jquery-3.3.1.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>  
     <!-- Bootstrap-4 -->
     <script src="../plugins/bootstrap-4.0.0/dist/js/bootstrap.js"></script> 
     <!-- Alertifyjs -->  
@@ -159,6 +180,7 @@ $fecha=date("Y-m-d");
     <script src="../mLogin/funcionesL.js"></script> <!-- Login -->
     <script src="../mDatosPersonales/funcionesDP.js"></script> <!-- Datos Personales --> 
     <script src="../mEstadoCivil/funcionesEC.js"></script> <!-- Estado Civil -->
+    <script src="../mTemas/funcionesTS.js"></script> <!-- TEMAS -->
     <!-- DataTables -->
     <script src="../plugins/dataTablesB4/js/jquery.dataTables.min.js"></script>
     <script src="../plugins/dataTablesB4/js/dataTables.bootstrap4.min.js"></script>
@@ -182,6 +204,7 @@ $fecha=date("Y-m-d");
     <!-- responsivevoice se requiere conexion a internet -->
     <script src="../plugins/voice/responsivevoice.js?key=wJDGnQJT" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.2.0/js/bootstrap-colorpicker.min.js"></script>
     <!-- fileinput -->
     <script src="../plugins/bootstrap-fileinput-master/js/plugins/piexif.js" type="text/javascript"></script>
     <script src="../plugins/bootstrap-fileinput-master/js/plugins/sortable.js" type="text/javascript"></script>
@@ -190,7 +213,7 @@ $fecha=date("Y-m-d");
     <script src="../plugins/bootstrap-fileinput-master/themes/fas/theme.js" type="text/javascript"></script>
     <script src="../plugins/bootstrap-fileinput-master/themes/explorer-fas/theme.js" type="text/javascript"></script>
     <!-- popper -->
-    <script src="../plugins/popper/popper.min.js" type="text/javascript"></script>
+    
     <!-- sweet alert -->
     <script src="../plugins/bootstrap-sweetalert-master/dist/sweetalert.js" type="text/javascript"></script>
     <script>
@@ -215,7 +238,6 @@ $fecha=date("Y-m-d");
             maxFileSize: 3000,
             maxFilesNum: 1
         });
-
     </script>
     <script type='text/javascript'>
     $(document).ready(function(){

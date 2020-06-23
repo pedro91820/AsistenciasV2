@@ -16,7 +16,11 @@ function ocultarSecciones(){
     $("#guardar-EC").hide();
     $("#editar-EC").hide();
     $("#Listado-EC").hide();
-    //USUARIOS
+    //Temas
+    $("#temas").hide();
+    $("#guardar-TS").hide();
+    $("#editar-TS").hide();
+    $("#Listado-TS").hide();
 }
 
 function verAsistencias(){
@@ -43,6 +47,23 @@ function verDatosPersonales(){
 
     $("#datosPersona").show();
     llenar_lista_DP();
+    var idTema=$("#inicioIdTema").val()
+    aplicarTema(idTema,'otro');      
+}
+
+function verTemas(){
+    ocultarSecciones();
+    $("#lblTitular").text("Temas");
+    
+    $("#editar-TS").hide();
+    $("#guardar-TS").hide();
+    $("#Listado-TS").fadeIn();
+    $("#frmGuardar-TS")[0].reset();
+    $("#frmActualizar-TS")[0].reset();
+    $("#badgeInfo").text("Lista");
+
+    $("#temas").show();
+    llenar_lista_TS();
     var idTema=$("#inicioIdTema").val()
     aplicarTema(idTema,'otro');      
 }
@@ -465,9 +486,9 @@ $('#scroll').click(function(){
 });
 
 //Abrir modal contraseña
-$('#cContra').click(function(){
+function abrirModal(){
     $('#modalContraU').modal('show');
-});
+}
 
 //MOSTRAR LA CONTRASEÑA
 $(function(){
